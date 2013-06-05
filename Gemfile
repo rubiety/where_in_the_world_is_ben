@@ -13,9 +13,3 @@ group :development do
   gem "capistrano"
   gem "rvm-capistrano"
 end
-
-# Tests
-group :test do
-  gem "rspec"
-  gem "guard"
-end
