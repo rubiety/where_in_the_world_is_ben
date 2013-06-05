@@ -1,4 +1,5 @@
-where_is_ben_hughes
+Where Is Ben Hughes
 ===================
 
-Simple app to show where I am, through Foursquare checkins
+Simple app to show where I am, through Foursquare checkins.
+
