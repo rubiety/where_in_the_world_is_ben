@@ -1,5 +1,5 @@
-Where Is Ben Hughes
+Where In The World is Ben
 ===================
 
-Simple app to show where I am, through Foursquare checkins.
+Simple app to show where I am, updated through Foursquare checkins, cached with redis.
 
