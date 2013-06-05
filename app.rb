@@ -1,4 +1,5 @@
 require "sinatra" 
+require "logger"
 require "redis"
 require "foursquare2"
 
@@ -12,6 +13,25 @@ APP_CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), "config/app.yml"))
 
 LOCATION_KEY = "whereintheworldisben.location"
 REDIS = Redis.new
+
+configure :production do
+  set :haml, :ugly => true
+  set :clean_trace, true
+
+  Dir.mkdir('logs') unless File.exist?('logs')
+
+  $logger = Logger.new("logs/common.log", "weekly")
+  $logger.level = Logger::WARN
+
+  # Spit stdout and stderr to a file during production in case something goes wrong:
+  $stdout.reopen("logs/output.log", "w")
+  $stdout.sync = true
+  $stderr.reopen($stdout)
+end
+
+configure :development do
+  $logger = Logger.new(STDOUT)
+end
 
 class Location
   def self.foursquare
