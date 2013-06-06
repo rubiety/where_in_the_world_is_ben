@@ -1,2 +1,3 @@
 config/app.yml
 config/deploy.rb
+.sass-cache

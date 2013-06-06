@@ -19,15 +19,12 @@
 
     -# Place favicon.ico and apple-touch-icon.png in the root directory
 
-    %style{:rel => "stylesheet", :type => "text/css", :href => "/stylesheets/screen.css"}
+    %link{:rel => "stylesheet", :type => "text/css", :href => "/stylesheets/screen.css"}
 
   %body
     .container
       #main-content{:role => "main"}
         = yield
-
-      %footer
-        %p &copy; 2013 Ben Hughes
         
     :javascript
       var _gaq=[["_setAccount","UA-XXXXXX-2"],["_trackPageview"]];

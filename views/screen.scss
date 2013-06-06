@@ -1,0 +1,22 @@
+@import "compass";
+@import "compass/reset";
+
+body {
+  background: #CCC;
+  font-family: Georgia, serif;
+}
+
+.container {
+  margin: 20px;
+}
+
+h2 {
+  font-size: 3em;
+  border-bottom: 1px solid black;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 5em;
+}

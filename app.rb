@@ -2,6 +2,7 @@ require "sinatra"
 require "logger"
 require "redis"
 require "foursquare2"
+require "./location"
 
 EXPIRE_MINUTES = 120
 
@@ -13,6 +14,16 @@ APP_CONFIG = YAML.load_file(File.join(File.dirname(__FILE__), "config/app.yml"))
 
 LOCATION_KEY = "whereintheworldisben.location"
 REDIS = Redis.new
+
+## Configuration
+configure do
+  Compass.configuration do |config|
+    config.project_path = File.dirname(__FILE__)
+    config.sass_dir = "views"
+  end
+
+  set :scss, Compass.sass_engine_options
+end
 
 configure :production do
   set :haml, :ugly => true
@@ -33,35 +44,8 @@ configure :development do
   $logger = Logger.new(STDOUT)
 end
 
-class Location
-  def self.foursquare
-    @foursquare = Foursquare2::Client.new(:oauth_token => APP_CONFIG["foursquare_oauth_token"])
-  end
 
-  def self.last_checkin
-    last_checkin = foursquare.user_checkins(:limit => 1, :sort => "newestfirst").items.first
-  end
-
-  def self.find
-    location = last_checkin.venue.location
-    [location.city, location.state, location.country].compact.join(", ")
-  end
-
-  def self.stored
-    REDIS.get(LOCATION_KEY)
-  end
-
-  def self.set(value, expiration = nil)
-    expiration ||= APP_CONFIG["expire_minutes"]
-    REDIS.set(LOCATION_KEY, value)
-    REDIS.expire(LOCATION_KEY, expiration)
-  end
-
-  def self.cached
-    stored || (set(Location.find); stored)
-  end
-end
-
+## Handlers
 get "/" do
   @location = Location.cached
   haml :index
@@ -77,3 +61,6 @@ get "/set" do
   end
 end
 
+get "/stylesheets/screen.css" do
+  scss :screen
+end

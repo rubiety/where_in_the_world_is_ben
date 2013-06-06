@@ -7,6 +7,7 @@ gem "redis"
 gem "foursquare2"
 gem "haml"
 gem "sass"
+gem "compass"
 
 # Local Development
 group :development do
