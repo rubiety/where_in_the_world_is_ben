@@ -31,11 +31,11 @@ configure :production do
 
   Dir.mkdir('logs') unless File.exist?('logs')
 
-  $logger = Logger.new(File.join(File.dirname(__FILE__), "logs/common.log"), "weekly")
+  $logger = Logger.new(File.join(File.dirname(__FILE__), "log/common.log"), "weekly")
   $logger.level = Logger::WARN
 
   # Spit stdout and stderr to a file during production in case something goes wrong:
-  $stdout.reopen(File.join(File.dirname(__FILE__), "logs/output.log"), "w")
+  $stdout.reopen(File.join(File.dirname(__FILE__), "log/output.log"), "w")
   $stdout.sync = true
   $stderr.reopen($stdout)
 end
