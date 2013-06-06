@@ -53,7 +53,8 @@ class Location
 
   def self.set(value, expiration = nil)
     expiration ||= APP_CONFIG["expire_minutes"]
-    REDIS.setex(LOCATION_KEY, expiration * 60, value)
+    REDIS.set(LOCATION_KEY, value)
+    REDIS.expire(LOCATION_KEY, expiration)
   end
 
   def self.cached
