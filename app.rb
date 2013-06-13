@@ -51,6 +51,11 @@ get "/" do
   haml :index
 end
 
+get "/location.json" do
+  content_type :json
+  { :location => Location.cached }.to_json
+end
+
 # With proper passwor (:pw) can set location manually via :to
 get "/set" do
   if params[:pw] == APP_CONFIG["set_password"]
